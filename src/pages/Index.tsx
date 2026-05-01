@@ -1,4 +1,5 @@
 import { useMemo, useState } from "react";
+import { Link } from "react-router-dom";
 import { Dumbbell, Flame, Target, Trophy, BarChart3, Repeat } from "lucide-react";
 import { StatCard } from "@/components/StatCard";
 import { WeeklyChart } from "@/components/WeeklyChart";
@@ -8,7 +9,7 @@ import { WorkoutPanel } from "@/components/WorkoutPanel";
 import { RestTimer } from "@/components/RestTimer";
 import { ReminderBanner } from "@/components/ReminderBanner";
 import { computeStats, useWorkoutLog } from "@/hooks/useWorkoutLog";
-import { WORKOUT_PLAN } from "@/data/workoutPlan";
+import { WORKOUT_PLAN, slugify } from "@/data/workoutPlan";
 
 const Index = () => {
   const { logs, getLog, updateExercise, updateNotes } = useWorkoutLog();
@@ -104,14 +105,9 @@ const Index = () => {
             {WORKOUT_PLAN.map((day, i) => {
               const isToday = day.dayIndex === ((new Date().getDay() + 6) % 7);
               return (
-                <button
+                <Link
                   key={day.dayIndex}
-                  onClick={() => {
-                    const d = new Date();
-                    const diff = day.dayIndex - ((d.getDay() + 6) % 7);
-                    d.setDate(d.getDate() + diff);
-                    setSelected(d);
-                  }}
+                  to={`/workout/${slugify(day.muscleGroup)}`}
                   style={{ animationDelay: `${i * 40}ms` }}
                   className={`group relative overflow-hidden rounded-2xl border text-left transition-all hover:scale-[1.03] hover:border-primary/60 animate-in-up ${
                     isToday ? "border-primary shadow-ember" : "border-border"
@@ -137,7 +133,7 @@ const Index = () => {
                       TODAY
                     </span>
                   )}
-                </button>
+                </Link>
               );
             })}
           </div>
