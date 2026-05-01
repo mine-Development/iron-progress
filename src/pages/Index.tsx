@@ -10,6 +10,8 @@ import { RestTimer } from "@/components/RestTimer";
 import { ReminderBanner } from "@/components/ReminderBanner";
 import { computeStats, useWorkoutLog } from "@/hooks/useWorkoutLog";
 import { WORKOUT_PLAN, slugify } from "@/data/workoutPlan";
+import { CustomWorkoutManager } from "@/components/CustomWorkoutManager";
+import { DietPanel } from "@/components/DietPanel";
 
 const Index = () => {
   const { logs, getLog, updateExercise, updateNotes } = useWorkoutLog();
@@ -60,8 +62,8 @@ const Index = () => {
           />
           <StatCard
             label="Total Volume"
-            value={`${(stats.totalVolume / 1000).toFixed(1)}t`}
-            hint="Last 7 days"
+            value={stats.totalVolume.toLocaleString()}
+            hint="Reps last 7 days"
             icon={BarChart3}
           />
           <StatCard
@@ -138,6 +140,10 @@ const Index = () => {
             })}
           </div>
         </section>
+
+        <CustomWorkoutManager />
+
+        <DietPanel />
       </main>
 
       <footer className="border-t border-border py-6 text-center text-xs text-muted-foreground">

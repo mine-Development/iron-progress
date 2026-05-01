@@ -2,7 +2,6 @@ import { useCallback, useEffect, useState } from "react";
 import { dateKey, WORKOUT_PLAN, getWorkoutForDate } from "@/data/workoutPlan";
 
 export type ExerciseLog = {
-  weight: number;
   reps: number;
   sets: number;
   done: boolean;
@@ -16,14 +15,13 @@ export type DayLog = {
   completed: boolean;
 };
 
-const STORAGE_KEY = "gym-tracker-logs-v2";
-const LEGACY_KEYS = ["gym-tracker-logs-v1"];
+const STORAGE_KEY = "gym-tracker-logs-v3";
+const LEGACY_KEYS = ["gym-tracker-logs-v1", "gym-tracker-logs-v2"];
 
 export function useWorkoutLog() {
   const [logs, setLogs] = useState<Record<string, DayLog>>({});
 
   useEffect(() => {
-    // Clear any legacy data
     LEGACY_KEYS.forEach(k => localStorage.removeItem(k));
     const raw = localStorage.getItem(STORAGE_KEY);
     if (raw) {
@@ -59,7 +57,7 @@ export function useWorkoutLog() {
       exercises: {},
       completed: false,
     };
-    const current = existing.exercises[exerciseId] ?? { weight: 0, reps: 0, sets: 0, done: false };
+    const current = existing.exercises[exerciseId] ?? { reps: 0, sets: 0, done: false };
     const next: DayLog = {
       ...existing,
       exercises: { ...existing.exercises, [exerciseId]: { ...current, ...patch } },
@@ -83,10 +81,10 @@ export function useWorkoutLog() {
   return { logs, getLog, updateExercise, updateNotes };
 }
 
-// ---------- analytics helpers ----------
+// ---------- analytics helpers (volume = sets × reps) ----------
 
 export const computeVolume = (log: DayLog) =>
-  Object.values(log.exercises).reduce((sum, ex) => sum + (ex.done ? ex.weight * ex.reps * ex.sets : 0), 0);
+  Object.values(log.exercises).reduce((sum, ex) => sum + (ex.done ? ex.reps * ex.sets : 0), 0);
 
 export const computeStats = (logs: Record<string, DayLog>) => {
   const today = new Date();
@@ -106,23 +104,21 @@ export const computeStats = (logs: Record<string, DayLog>) => {
     if (log?.completed) completedThisWeek++;
     if (log) {
       Object.values(log.exercises).forEach(ex => {
-        if (ex.done) { totalSets += ex.sets; totalReps += ex.reps * ex.sets; totalVolume += ex.weight * ex.reps * ex.sets; }
+        if (ex.done) { totalSets += ex.sets; totalReps += ex.reps * ex.sets; totalVolume += ex.reps * ex.sets; }
       });
     }
   }
 
-  // Streak: walk back from today (or yesterday) counting completed days
   let streak = 0;
   for (let i = 0; i < 365; i++) {
     const d = new Date(today);
     d.setDate(d.getDate() - i);
     const log = logs[dateKey(d)];
     if (log?.completed) streak++;
-    else if (i === 0) continue; // today not done yet, don't break
+    else if (i === 0) continue;
     else break;
   }
 
-  // Monthly volume trend (last 30 days)
   const last30: { date: string; volume: number }[] = [];
   for (let i = 29; i >= 0; i--) {
     const d = new Date(today);
@@ -135,20 +131,6 @@ export const computeStats = (logs: Record<string, DayLog>) => {
   }
 
   return { last7, last30, totalSets, totalReps, totalVolume, completedThisWeek, streak };
-};
-
-export const exerciseProgress = (logs: Record<string, DayLog>, exerciseId: string) => {
-  const points: { date: string; weight: number }[] = [];
-  Object.values(logs)
-    .sort((a, b) => a.date.localeCompare(b.date))
-    .forEach(log => {
-      const ex = log.exercises[exerciseId];
-      if (ex?.done && ex.weight > 0) {
-        const [y, m, day] = log.date.split("-");
-        points.push({ date: `${m}/${day}`, weight: ex.weight });
-      }
-    });
-  return points;
 };
 
 export { WORKOUT_PLAN };

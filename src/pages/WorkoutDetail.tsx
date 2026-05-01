@@ -1,10 +1,12 @@
 import { Link, useParams } from "react-router-dom";
 import { ArrowLeft, Dumbbell, Target, Info } from "lucide-react";
-import { getWorkoutBySlug, WORKOUT_PLAN } from "@/data/workoutPlan";
+import { getWorkoutBySlug, slugify, WORKOUT_PLAN } from "@/data/workoutPlan";
+import { useCustomWorkouts } from "@/hooks/useCustomWorkouts";
 
 const WorkoutDetail = () => {
   const { slug = "" } = useParams();
-  const workout = getWorkoutBySlug(slug);
+  const { items: customs } = useCustomWorkouts();
+  const workout = getWorkoutBySlug(slug) ?? customs.find(c => slugify(c.muscleGroup) === slug);
 
   if (!workout) {
     return (

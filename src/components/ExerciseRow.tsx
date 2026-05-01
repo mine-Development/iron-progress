@@ -37,9 +37,8 @@ export const ExerciseRow = ({ exercise, log, onChange }: Props) => {
         </button>
       </div>
 
-      <div className="grid grid-cols-3 gap-2">
+      <div className="grid grid-cols-2 gap-2">
         {([
-          ["Weight", "weight", "kg"],
           ["Reps", "reps", ""],
           ["Sets", "sets", ""],
         ] as const).map(([label, key, unit]) => (

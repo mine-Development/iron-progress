@@ -6,7 +6,7 @@ export const WeeklyChart = ({ data }: Props) => (
   <div className="rounded-2xl border border-border gradient-card p-5 shadow-card animate-in-up">
     <div className="flex items-center justify-between mb-4">
       <h3 className="text-lg font-semibold">This Week's Volume</h3>
-      <span className="text-xs text-muted-foreground">kg × reps × sets</span>
+      <span className="text-xs text-muted-foreground">sets × reps</span>
     </div>
     <div className="h-56">
       <ResponsiveContainer width="100%" height="100%">
@@ -21,7 +21,7 @@ export const WeeklyChart = ({ data }: Props) => (
               borderRadius: 12,
               color: "hsl(var(--foreground))",
             }}
-            formatter={(v: number) => [`${v.toLocaleString()} kg`, "Volume"]}
+            formatter={(v: number) => [`${v.toLocaleString()} reps`, "Volume"]}
           />
           <Bar dataKey="volume" radius={[8, 8, 0, 0]}>
             {data.map((d, i) => (
