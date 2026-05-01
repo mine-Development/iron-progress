@@ -38,14 +38,14 @@ export const WORKOUT_PLAN: WorkoutDay[] = [
   },
   {
     dayIndex: 1,
-    title: "Day 2 — Back",
-    muscleGroup: "Back",
-    image: backImg,
+    title: "Day 2 — Triceps",
+    muscleGroup: "Triceps",
+    image: tricepsImg,
     exercises: [
-      { id: "b1", name: "Deadlift", sets: 4, reps: "5", instructions: "Bar over mid-foot, neutral spine, drive through floor.", muscle: "Posterior Chain" },
-      { id: "b2", name: "Pull-ups", sets: 4, reps: "6-10", instructions: "Pull chest to bar; control the descent.", muscle: "Lats" },
-      { id: "b3", name: "Barbell Row", sets: 4, reps: "8-10", instructions: "Hinge ~45°; row to lower ribs.", muscle: "Mid-Back" },
-      { id: "b4", name: "Face Pulls", sets: 3, reps: "12-15", instructions: "Pull rope to forehead; externally rotate.", muscle: "Rear Delts" },
+      { id: "t1", name: "Close-Grip Bench Press", sets: 4, reps: "6-8", instructions: "Hands shoulder-width; tuck elbows.", muscle: "Triceps" },
+      { id: "t2", name: "Skull Crushers", sets: 3, reps: "10-12", instructions: "Lower bar to forehead; only elbows move.", muscle: "Long Head" },
+      { id: "t3", name: "Tricep Pushdown", sets: 3, reps: "12-15", instructions: "Elbows pinned; full extension.", muscle: "Lateral Head" },
+      { id: "t4", name: "Overhead Extension", sets: 3, reps: "12-15", instructions: "Stretch deeply at the bottom.", muscle: "Long Head" },
     ],
   },
   {
@@ -62,7 +62,19 @@ export const WORKOUT_PLAN: WorkoutDay[] = [
   },
   {
     dayIndex: 3,
-    title: "Day 4 — Biceps",
+    title: "Day 4 — Back",
+    muscleGroup: "Back",
+    image: backImg,
+    exercises: [
+      { id: "b1", name: "Deadlift", sets: 4, reps: "5", instructions: "Bar over mid-foot, neutral spine, drive through floor.", muscle: "Posterior Chain" },
+      { id: "b2", name: "Pull-ups", sets: 4, reps: "6-10", instructions: "Pull chest to bar; control the descent.", muscle: "Lats" },
+      { id: "b3", name: "Barbell Row", sets: 4, reps: "8-10", instructions: "Hinge ~45°; row to lower ribs.", muscle: "Mid-Back" },
+      { id: "b4", name: "Face Pulls", sets: 3, reps: "12-15", instructions: "Pull rope to forehead; externally rotate.", muscle: "Rear Delts" },
+    ],
+  },
+  {
+    dayIndex: 4,
+    title: "Day 5 — Biceps",
     muscleGroup: "Biceps",
     image: bicepsImg,
     exercises: [
@@ -70,18 +82,6 @@ export const WORKOUT_PLAN: WorkoutDay[] = [
       { id: "bi2", name: "Incline Dumbbell Curl", sets: 3, reps: "10-12", instructions: "Lean back to stretch the biceps.", muscle: "Long Head" },
       { id: "bi3", name: "Hammer Curl", sets: 3, reps: "10-12", instructions: "Neutral grip; control the negative.", muscle: "Brachialis" },
       { id: "bi4", name: "Cable Curl", sets: 3, reps: "12-15", instructions: "Constant tension; squeeze at the top.", muscle: "Biceps" },
-    ],
-  },
-  {
-    dayIndex: 4,
-    title: "Day 5 — Triceps",
-    muscleGroup: "Triceps",
-    image: tricepsImg,
-    exercises: [
-      { id: "t1", name: "Close-Grip Bench Press", sets: 4, reps: "6-8", instructions: "Hands shoulder-width; tuck elbows.", muscle: "Triceps" },
-      { id: "t2", name: "Skull Crushers", sets: 3, reps: "10-12", instructions: "Lower bar to forehead; only elbows move.", muscle: "Long Head" },
-      { id: "t3", name: "Tricep Pushdown", sets: 3, reps: "12-15", instructions: "Elbows pinned; full extension.", muscle: "Lateral Head" },
-      { id: "t4", name: "Overhead Extension", sets: 3, reps: "12-15", instructions: "Stretch deeply at the bottom.", muscle: "Long Head" },
     ],
   },
   {
@@ -108,6 +108,11 @@ export const WORKOUT_PLAN: WorkoutDay[] = [
     ],
   },
 ];
+
+export const slugify = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
+
+export const getWorkoutBySlug = (slug: string): WorkoutDay | undefined =>
+  WORKOUT_PLAN.find(d => slugify(d.muscleGroup) === slug);
 
 export const getWorkoutForDate = (date: Date): WorkoutDay => {
   // Monday=0 ... Sunday=6

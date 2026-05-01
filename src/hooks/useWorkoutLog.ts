@@ -16,49 +16,21 @@ export type DayLog = {
   completed: boolean;
 };
 
-const STORAGE_KEY = "gym-tracker-logs-v1";
-
-const seedSampleData = (): Record<string, DayLog> => {
-  const logs: Record<string, DayLog> = {};
-  const today = new Date();
-  // Seed past 21 days with mostly-completed workouts for demo
-  for (let i = 21; i >= 1; i--) {
-    const d = new Date(today);
-    d.setDate(d.getDate() - i);
-    const plan = getWorkoutForDate(d);
-    // Skip ~20% to simulate missed days
-    if (Math.random() < 0.2 && i > 1) continue;
-    const exLogs: Record<string, ExerciseLog> = {};
-    plan.exercises.forEach((ex, idx) => {
-      const baseWeight = 40 + idx * 15 + Math.floor((21 - i) * 0.8);
-      exLogs[ex.id] = {
-        weight: baseWeight,
-        reps: 8 + Math.floor(Math.random() * 4),
-        sets: ex.sets,
-        done: true,
-      };
-    });
-    logs[dateKey(d)] = {
-      date: dateKey(d),
-      dayIndex: plan.dayIndex,
-      exercises: exLogs,
-      completed: true,
-    };
-  }
-  return logs;
-};
+const STORAGE_KEY = "gym-tracker-logs-v2";
+const LEGACY_KEYS = ["gym-tracker-logs-v1"];
 
 export function useWorkoutLog() {
   const [logs, setLogs] = useState<Record<string, DayLog>>({});
 
   useEffect(() => {
+    // Clear any legacy data
+    LEGACY_KEYS.forEach(k => localStorage.removeItem(k));
     const raw = localStorage.getItem(STORAGE_KEY);
     if (raw) {
       try { setLogs(JSON.parse(raw)); return; } catch {}
     }
-    const seed = seedSampleData();
-    setLogs(seed);
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(seed));
+    setLogs({});
+    localStorage.setItem(STORAGE_KEY, JSON.stringify({}));
   }, []);
 
   const persist = (next: Record<string, DayLog>) => {
