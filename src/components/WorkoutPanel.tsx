@@ -52,7 +52,7 @@ export const WorkoutPanel = ({ date, log, onChangeExercise, onNotes }: Props) =>
           <ExerciseRow
             key={ex.id}
             exercise={ex}
-            log={log.exercises[ex.id] ?? { weight: 0, reps: 0, sets: 0, done: false }}
+            log={log.exercises[ex.id] ?? { reps: 0, sets: 0, done: false }}
             onChange={patch => onChangeExercise(ex.id, patch)}
           />
         ))}

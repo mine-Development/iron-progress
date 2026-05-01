@@ -26,7 +26,7 @@ export const MonthlyTrend = ({ data }: Props) => (
               borderRadius: 12,
               color: "hsl(var(--foreground))",
             }}
-            formatter={(v: number) => [`${v.toLocaleString()} kg`, "Volume"]}
+            formatter={(v: number) => [`${v.toLocaleString()} reps`, "Volume"]}
           />
           <Area type="monotone" dataKey="volume" stroke="hsl(var(--primary))" strokeWidth={2} fill="url(#vol)" />
         </AreaChart>
