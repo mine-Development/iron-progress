@@ -106,7 +106,7 @@ const WorkoutDetail = () => {
         <section className="mt-12">
           <h2 className="text-xl font-bold mb-4">Other days</h2>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
-            {WORKOUT_PLAN.filter(d => d.dayIndex !== workout.dayIndex).map(d => (
+            {plan.filter(d => d.dayIndex !== workout.dayIndex).map(d => (
               <Link
                 key={d.dayIndex}
                 to={`/workout/${d.muscleGroup.toLowerCase()}`}
