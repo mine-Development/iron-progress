@@ -9,9 +9,10 @@ import { WorkoutPanel } from "@/components/WorkoutPanel";
 import { RestTimer } from "@/components/RestTimer";
 import { ReminderBanner } from "@/components/ReminderBanner";
 import { computeStats, useWorkoutLog } from "@/hooks/useWorkoutLog";
-import { WORKOUT_PLAN, slugify } from "@/data/workoutPlan";
-import { CustomWorkoutManager } from "@/components/CustomWorkoutManager";
-import { DietPanel } from "@/components/DietPanel";
+import { slugify } from "@/data/workoutPlan";
+import { WeeklyPlanManager } from "@/components/WeeklyPlanManager";
+import { DietSummaryCard } from "@/components/DietSummaryCard";
+import { useWeeklyPlan } from "@/hooks/useWeeklyPlan";
 
 const Index = () => {
   const { logs, getLog, updateExercise, updateNotes } = useWorkoutLog();
