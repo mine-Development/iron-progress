@@ -16,6 +16,7 @@ import { useWeeklyPlan } from "@/hooks/useWeeklyPlan";
 
 const Index = () => {
   const { logs, getLog, updateExercise, updateNotes } = useWorkoutLog();
+  const { plan } = useWeeklyPlan();
   const [selected, setSelected] = useState<Date>(new Date());
 
   const stats = useMemo(() => computeStats(logs), [logs]);
@@ -97,15 +98,15 @@ const Index = () => {
           </div>
         </section>
 
-        {/* 6-day split overview */}
-        <section className="mb-10">
+        {/* 7-day split overview */}
+        <section className="mb-6">
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-xl font-bold flex items-center gap-2">
-              <Trophy className="h-5 w-5 text-primary" /> Your 6-Day Split
+              <Trophy className="h-5 w-5 text-primary" /> Your 7-Day Plan
             </h2>
           </div>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-7 gap-3">
-            {WORKOUT_PLAN.map((day, i) => {
+            {plan.map((day, i) => {
               const isToday = day.dayIndex === ((new Date().getDay() + 6) % 7);
               return (
                 <Link
@@ -142,9 +143,9 @@ const Index = () => {
           </div>
         </section>
 
-        <CustomWorkoutManager />
+        <WeeklyPlanManager />
 
-        <DietPanel />
+        <DietSummaryCard />
       </main>
 
       <footer className="border-t border-border py-6 text-center text-xs text-muted-foreground">
