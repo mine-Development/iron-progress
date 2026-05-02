@@ -33,7 +33,7 @@ const Index = () => {
             </div>
             <div>
               <h1 className="text-lg font-bold leading-none">FORGE</h1>
-              <p className="text-[11px] text-muted-foreground">6-Day Split Tracker</p>
+              <p className="text-[11px] text-muted-foreground">7-Day Plan Tracker</p>
             </div>
           </div>
           <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-full bg-secondary/60 border border-border">
@@ -58,7 +58,7 @@ const Index = () => {
           />
           <StatCard
             label="This Week"
-            value={`${stats.completedThisWeek}/6`}
+            value={`${stats.completedThisWeek}/7`}
             hint="Workouts completed"
             icon={Target}
           />
