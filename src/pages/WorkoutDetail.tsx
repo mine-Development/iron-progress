@@ -109,7 +109,7 @@ const WorkoutDetail = () => {
             {plan.filter(d => d.dayIndex !== workout.dayIndex).map(d => (
               <Link
                 key={d.dayIndex}
-                to={`/workout/${d.muscleGroup.toLowerCase()}`}
+                to={`/workout/${slugify(d.muscleGroup)}`}
                 className="rounded-xl border border-border overflow-hidden hover:border-primary/60 hover:scale-[1.03] transition-all"
               >
                 <div className="aspect-square overflow-hidden">
