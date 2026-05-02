@@ -1,12 +1,11 @@
 import { Link, useParams } from "react-router-dom";
 import { ArrowLeft, Dumbbell, Target, Info } from "lucide-react";
-import { getWorkoutBySlug, slugify, WORKOUT_PLAN } from "@/data/workoutPlan";
-import { useCustomWorkouts } from "@/hooks/useCustomWorkouts";
+import { getActivePlan, getWorkoutBySlug, slugify } from "@/data/workoutPlan";
 
 const WorkoutDetail = () => {
   const { slug = "" } = useParams();
-  const { items: customs } = useCustomWorkouts();
-  const workout = getWorkoutBySlug(slug) ?? customs.find(c => slugify(c.muscleGroup) === slug);
+  const workout = getWorkoutBySlug(slug);
+  const plan = getActivePlan();
 
   if (!workout) {
     return (
@@ -107,10 +106,10 @@ const WorkoutDetail = () => {
         <section className="mt-12">
           <h2 className="text-xl font-bold mb-4">Other days</h2>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
-            {WORKOUT_PLAN.filter(d => d.dayIndex !== workout.dayIndex).map(d => (
+            {plan.filter(d => d.dayIndex !== workout.dayIndex).map(d => (
               <Link
                 key={d.dayIndex}
-                to={`/workout/${d.muscleGroup.toLowerCase()}`}
+                to={`/workout/${slugify(d.muscleGroup)}`}
                 className="rounded-xl border border-border overflow-hidden hover:border-primary/60 hover:scale-[1.03] transition-all"
               >
                 <div className="aspect-square overflow-hidden">

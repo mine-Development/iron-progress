@@ -111,14 +111,27 @@ export const WORKOUT_PLAN: WorkoutDay[] = [
 
 export const slugify = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
 
+const WEEKLY_PLAN_KEY = "gym-tracker-weekly-plan-v1";
+
+export const getActivePlan = (): WorkoutDay[] => {
+  if (typeof window === "undefined") return WORKOUT_PLAN;
+  try {
+    const raw = localStorage.getItem(WEEKLY_PLAN_KEY);
+    if (raw) {
+      const parsed = JSON.parse(raw) as WorkoutDay[];
+      if (Array.isArray(parsed) && parsed.length === 7) return parsed;
+    }
+  } catch {}
+  return WORKOUT_PLAN;
+};
+
 export const getWorkoutBySlug = (slug: string): WorkoutDay | undefined =>
-  WORKOUT_PLAN.find(d => slugify(d.muscleGroup) === slug);
+  getActivePlan().find(d => slugify(d.muscleGroup) === slug);
 
 export const getWorkoutForDate = (date: Date): WorkoutDay => {
-  // Monday=0 ... Sunday=6
   const jsDay = date.getDay(); // 0=Sun
   const idx = jsDay === 0 ? 6 : jsDay - 1;
-  return WORKOUT_PLAN[idx];
+  return getActivePlan()[idx];
 };
 
 export const dateKey = (d: Date) =>
