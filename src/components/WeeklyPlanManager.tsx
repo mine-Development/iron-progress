@@ -29,6 +29,7 @@ export const WeeklyPlanManager = () => {
       reps: draft.reps || "10",
       muscle: draft.muscle.trim() || plan.find(p => p.dayIndex === dayIndex)?.muscleGroup || "",
       instructions: draft.instructions.trim() || "Maintain good form and full range of motion.",
+      image: draft.image || undefined,
     };
     if (editing && editing.dayIndex === dayIndex) {
       updateExercise(dayIndex, editing.exId, payload);
