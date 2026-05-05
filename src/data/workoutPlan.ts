@@ -6,6 +6,34 @@ import tricepsImg from "@/assets/muscle-triceps.jpg";
 import legsImg from "@/assets/muscle-legs.jpg";
 import coreImg from "@/assets/muscle-core.jpg";
 
+import exBenchPress from "@/assets/ex-bench-press.jpg";
+import exInclineDbPress from "@/assets/ex-incline-db-press.jpg";
+import exCableFly from "@/assets/ex-cable-fly.jpg";
+import exPushups from "@/assets/ex-pushups.jpg";
+import exCloseGripBench from "@/assets/ex-close-grip-bench.jpg";
+import exSkullCrushers from "@/assets/ex-skull-crushers.jpg";
+import exTricepPushdown from "@/assets/ex-tricep-pushdown.jpg";
+import exOverheadExtension from "@/assets/ex-overhead-extension.jpg";
+import exOverheadPress from "@/assets/ex-overhead-press.jpg";
+import exLateralRaise from "@/assets/ex-lateral-raise.jpg";
+import exRearDeltFly from "@/assets/ex-rear-delt-fly.jpg";
+import exShrugs from "@/assets/ex-shrugs.jpg";
+import exDeadlift from "@/assets/ex-deadlift.jpg";
+import exPullups from "@/assets/ex-pullups.jpg";
+import exBarbellRow from "@/assets/ex-barbell-row.jpg";
+import exFacePulls from "@/assets/ex-face-pulls.jpg";
+import exBarbellCurl from "@/assets/ex-barbell-curl.jpg";
+import exInclineCurl from "@/assets/ex-incline-curl.jpg";
+import exHammerCurl from "@/assets/ex-hammer-curl.jpg";
+import exCableCurl from "@/assets/ex-cable-curl.jpg";
+import exBackSquat from "@/assets/ex-back-squat.jpg";
+import exRdl from "@/assets/ex-rdl.jpg";
+import exLegPress from "@/assets/ex-leg-press.jpg";
+import exCalfRaise from "@/assets/ex-calf-raise.jpg";
+import exPlank from "@/assets/ex-plank.jpg";
+import exLegRaise from "@/assets/ex-leg-raise.jpg";
+import exCableCrunch from "@/assets/ex-cable-crunch.jpg";
+
 export type Exercise = {
   id: string;
   name: string;
@@ -13,6 +41,7 @@ export type Exercise = {
   reps: string;
   instructions: string;
   muscle: string;
+  image?: string;
 };
 
 export type WorkoutDay = {
