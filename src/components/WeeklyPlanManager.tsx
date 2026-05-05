@@ -108,6 +108,11 @@ export const WeeklyPlanManager = () => {
                     )}
                     {day.exercises.map(ex => (
                       <div key={ex.id} className="flex items-start gap-3 rounded-lg border border-border bg-background/40 p-3">
+                        {ex.image ? (
+                          <img src={ex.image} alt={ex.name} className="h-12 w-12 rounded-md object-cover border border-border shrink-0" />
+                        ) : (
+                          <div className="h-12 w-12 rounded-md bg-secondary border border-border shrink-0" />
+                        )}
                         <div className="flex-1 min-w-0">
                           <p className="text-sm font-semibold truncate">{ex.name}</p>
                           <p className="text-[11px] text-muted-foreground">
@@ -121,7 +126,7 @@ export const WeeklyPlanManager = () => {
                           <button
                             onClick={() => {
                               setEditing({ dayIndex: day.dayIndex, exId: ex.id });
-                              setDraft({ name: ex.name, sets: ex.sets, reps: ex.reps, muscle: ex.muscle, instructions: ex.instructions });
+                              setDraft({ name: ex.name, sets: ex.sets, reps: ex.reps, muscle: ex.muscle, instructions: ex.instructions, image: ex.image || "" });
                             }}
                             className="h-7 w-7 grid place-items-center rounded-md text-muted-foreground hover:text-foreground hover:bg-secondary"
                           >
