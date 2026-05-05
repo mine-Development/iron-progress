@@ -131,9 +131,9 @@ export const WORKOUT_PLAN: WorkoutDay[] = [
     muscleGroup: "Core",
     image: coreImg,
     exercises: [
-      { id: "co1", name: "Plank", sets: 3, reps: "60s", instructions: "Body in a straight line; brace hard.", muscle: "Core" },
-      { id: "co2", name: "Hanging Leg Raise", sets: 3, reps: "10-12", instructions: "Control the swing; raise legs to parallel.", muscle: "Lower Abs" },
-      { id: "co3", name: "Cable Crunch", sets: 3, reps: "12-15", instructions: "Crunch the ribs toward hips.", muscle: "Upper Abs" },
+      { id: "co1", name: "Plank", sets: 3, reps: "60s", instructions: "Body in a straight line; brace hard.", muscle: "Core", image: exPlank },
+      { id: "co2", name: "Hanging Leg Raise", sets: 3, reps: "10-12", instructions: "Control the swing; raise legs to parallel.", muscle: "Lower Abs", image: exLegRaise },
+      { id: "co3", name: "Cable Crunch", sets: 3, reps: "12-15", instructions: "Crunch the ribs toward hips.", muscle: "Upper Abs", image: exCableCrunch },
     ],
   },
 ];
