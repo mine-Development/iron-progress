@@ -177,6 +177,33 @@ export const WeeklyPlanManager = () => {
                       onChange={e => setDraft(d => ({ ...d, instructions: e.target.value }))}
                       placeholder="Note / form cues"
                       className="w-full rounded-lg bg-input border border-border px-3 py-2 text-sm focus:border-primary focus:outline-none resize-none" />
+                    <div className="flex items-start gap-3">
+                      <label className="relative shrink-0 h-20 w-20 rounded-lg border border-dashed border-border overflow-hidden cursor-pointer group bg-background/40 grid place-items-center">
+                        {draft.image ? (
+                          <>
+                            <img src={draft.image} alt="" className="absolute inset-0 w-full h-full object-cover" />
+                            <div className="absolute inset-0 bg-background/70 opacity-0 group-hover:opacity-100 grid place-items-center text-[10px] gap-1 transition">
+                              <Upload className="h-3.5 w-3.5" /> Replace
+                            </div>
+                          </>
+                        ) : (
+                          <div className="text-[10px] text-muted-foreground text-center px-1 flex flex-col items-center gap-1">
+                            <Upload className="h-4 w-4" /> Reference image
+                          </div>
+                        )}
+                        <input type="file" accept="image/*" className="hidden"
+                          onChange={e => readImage(e.target.files?.[0], url => setDraft(d => ({ ...d, image: url })))} />
+                      </label>
+                      <div className="flex-1 text-[11px] text-muted-foreground">
+                        <p>Optional reference image for this exercise. Max 2.5 MB.</p>
+                        {draft.image && (
+                          <button onClick={() => setDraft(d => ({ ...d, image: "" }))}
+                            className="mt-1 inline-flex items-center gap-1 text-muted-foreground hover:text-destructive">
+                            <X className="h-3 w-3" /> Remove image
+                          </button>
+                        )}
+                      </div>
+                    </div>
                     <div className="flex justify-between items-center gap-2">
                       <button onClick={() => { if (confirm("Reset this day to defaults?")) resetDay(day.dayIndex); }}
                         className="text-[11px] text-muted-foreground hover:text-foreground inline-flex items-center gap-1">
