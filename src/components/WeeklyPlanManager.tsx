@@ -4,8 +4,8 @@ import { ChevronDown, Pencil, Plus, RotateCcw, Trash2, Upload, X } from "lucide-
 import { DAY_NAMES, useWeeklyPlan } from "@/hooks/useWeeklyPlan";
 import { slugify, type Exercise } from "@/data/workoutPlan";
 
-type Draft = { name: string; sets: number; reps: string; muscle: string; instructions: string };
-const emptyDraft: Draft = { name: "", sets: 3, reps: "10-12", muscle: "", instructions: "" };
+type Draft = { name: string; sets: number; reps: string; muscle: string; instructions: string; image: string };
+const emptyDraft: Draft = { name: "", sets: 3, reps: "10-12", muscle: "", instructions: "", image: "" };
 
 const readImage = (file: File | undefined, cb: (url: string) => void) => {
   if (!file) return;
