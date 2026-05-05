@@ -69,7 +69,7 @@ const WorkoutDetail = () => {
               >
                 <div className="aspect-square sm:aspect-auto bg-secondary/40 overflow-hidden">
                   <img
-                    src={workout.image}
+                    src={ex.image || workout.image}
                     alt={`${ex.name} – ${ex.muscle}`}
                     loading="lazy"
                     className="w-full h-full object-cover"
